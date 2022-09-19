@@ -17,8 +17,19 @@ export const authOptions: NextAuthOptions = {
   // https://next-auth.js.org/configuration/providers/oauth
   adapter: PrismaAdapter(prisma),
   session: { strategy: "jwt" },
+
+  pages: {
+    signIn: '/pages/login'
+   /* signOut: '/auth/signout',
+    error: '/auth/error', // Error code passed in query string as ?error=
+    verifyRequest: '/auth/verify-request', // (used for check email message)
+    newUser: '/auth/new-user' // New users will be directed here on first sign in (leave the property out if not of interest)*/
+  },
+
+
+
   providers: [
-   
+
      EmailProvider({
          server: process.env.EMAIL_SERVER,
          from: process.env.EMAIL_FROM,
@@ -36,7 +47,7 @@ export const authOptions: NextAuthOptions = {
       },
     }),
     */
-    
+
     GoogleProvider({
       clientId: process.env.GOOGLE_ID,
       clientSecret: process.env.GOOGLE_SECRET,
