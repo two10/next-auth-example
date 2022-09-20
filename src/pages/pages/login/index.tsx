@@ -21,7 +21,7 @@ import { styled, useTheme } from '@mui/material/styles'
 import MuiCard, { CardProps } from '@mui/material/Card'
 import InputAdornment from '@mui/material/InputAdornment'
 import MuiFormControlLabel, { FormControlLabelProps } from '@mui/material/FormControlLabel'
-
+import {  useEffect } from "react"
 // ** Icons Imports
 import Google from 'mdi-material-ui/Google'
 import Github from 'mdi-material-ui/Github'
@@ -86,6 +86,19 @@ const LoginPage = () => {
   const handleMouseDownPassword = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
   }
+
+  let redirectUrl = "";
+
+  useEffect(() => {
+    const url = new URL(location.href);
+    const callbackURL = url.searchParams.get("callbackUrl")!;
+    if(callbackURL !="" ){
+      redirectUrl = callbackURL;
+    }
+    if(redirectUrl=="" || redirectUrl == null){
+      redirectUrl = window.location.origin;
+    }
+  });
 
   return (
     <Box className='content-center'>
@@ -242,7 +255,18 @@ const LoginPage = () => {
               </Link>
               <Link href='/' passHref>
                 <IconButton component='a' onClick={(e: MouseEvent<HTMLElement>) => e.preventDefault()}>
-                  <Google sx={{ color: '#db4437' }} onClick={() => signIn('google')} />
+                  <Google sx={{ color: '#db4437' }} onClick={
+
+                    () =>
+
+                    {
+
+                                signIn('google' , {callbackUrl: redirectUrl,})
+                    }
+
+
+
+    } />
                 </IconButton>
               </Link>
             </Box>

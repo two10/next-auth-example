@@ -18,7 +18,8 @@ export default function ProtectedComponent({ children }: Props) {
 
  useEffect(() => {
     if(status == "unauthenticated")
-       router.push('pages/login')
+
+       router.push('pages/login?callbackUrl='+router.basePath)
   }, [status])
 
 
