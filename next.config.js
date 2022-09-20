@@ -4,7 +4,7 @@ module.exports = {
   trailingSlash: true,
   reactStrictMode: false,
   experimental: {
-    esmExternals: false,
+    esmExternals: true,
     jsconfigPaths: true // enables it for both jsconfig.json and tsconfig.json
   },
   webpack: config => {
