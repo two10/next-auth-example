@@ -1,16 +1,14 @@
 import NextAuth, { NextAuthOptions } from "next-auth"
 import GoogleProvider from "next-auth/providers/google"
-import FacebookProvider from "next-auth/providers/facebook"
-import GithubProvider from "next-auth/providers/github"
-import TwitterProvider from "next-auth/providers/twitter"
-import Auth0Provider from "next-auth/providers/auth0"
 import EmailProvider from "next-auth/providers/email"
 import { PrismaAdapter } from "@next-auth/prisma-adapter"
 import { PrismaClient } from "@prisma/client"
+
 // import AppleProvider from "next-auth/providers/apple"
 // import EmailProvider from "next-auth/providers/email"
 
 const prisma = new PrismaClient()
+
 // For more information on each option (and a full list of options) go to
 // https://next-auth.js.org/configuration/options
 export const authOptions: NextAuthOptions = {
@@ -20,6 +18,7 @@ export const authOptions: NextAuthOptions = {
 
   pages: {
     signIn: '/pages/login'
+
    /* signOut: '/auth/signout',
     error: '/auth/error', // Error code passed in query string as ?error=
     verifyRequest: '/auth/verify-request', // (used for check email message)
@@ -27,11 +26,12 @@ export const authOptions: NextAuthOptions = {
   },
 
   callbacks: {
-    redirect: async (url, baseUrl) => {
-        return url.startsWith(baseUrl)
-            ? Promise.resolve(url)
-            : Promise.resolve(baseUrl)
-    }
+
+    async jwt({ token }) {
+      token.userRole = "admin"
+
+      return token
+    },
   },
 
   providers: [
@@ -40,6 +40,7 @@ export const authOptions: NextAuthOptions = {
          server: process.env.EMAIL_SERVER,
          from: process.env.EMAIL_FROM,
        }),
+
     // Temporarily removing the Apple provider from the demo site as the
     // callback URL for it needs updating due to Vercel changing domains
 /*
@@ -55,19 +56,14 @@ export const authOptions: NextAuthOptions = {
     */
 
     GoogleProvider({
-      clientId: process.env.GOOGLE_ID,
-      clientSecret: process.env.GOOGLE_SECRET,
+      clientId: process.env.GOOGLE_ID!,
+      clientSecret: process.env.GOOGLE_SECRET!,
     })
   ],
   theme: {
     colorScheme: "light",
   },
-  callbacks: {
-    async jwt({ token }) {
-      token.userRole = "admin"
-      return token
-    },
-  },
+
 }
 
 export default NextAuth(authOptions)

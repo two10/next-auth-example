@@ -2,7 +2,7 @@
 import { unstable_getServerSession } from "next-auth/next"
 import { authOptions } from "../auth/[...nextauth]"
 
-import type { NextApiRequest, NextApiResponse } from "next"
+import type { NextApiRequest, NextApiResponse } from "next/types"
 
 export default async function handler(
   req: NextApiRequest,

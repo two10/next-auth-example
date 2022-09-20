@@ -1,7 +1,7 @@
 // ** Next Imports
 import Head from 'next/head'
 import { Router } from 'next/router'
-import type { NextPage } from 'next'
+import type { NextPage } from 'next-custom'
 import type { AppProps } from 'next/app'
 
 // ** Loader Import
@@ -30,13 +30,16 @@ import 'react-perfect-scrollbar/dist/css/styles.css'
 // ** Global css styles
 import '../../styles/globals.css'
 
+import { ReactNode } from 'react';
 
 
-
+type Page<P = {}> = NextPage<P> & {
+  getLayout?: (page: ReactNode) => ReactNode;
+};
 
 // ** Extend App Props with Emotion
 type ExtendedAppProps = AppProps & {
-  Component: NextPage
+  Component: Page
   emotionCache: EmotionCache
 }
 
