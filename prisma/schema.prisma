@@ -29,7 +29,7 @@ model Account {
 }
 
 model Session {
-  id           String   @id @default(cuid())
+  id           String   @id @default(uuid())
   sessionToken String   @unique
   userId       String
   expires      DateTime
@@ -37,11 +37,13 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id            String    @id @default(uuid())
   name          String?
   email         String?   @unique
   emailVerified DateTime?
   image         String?
+  role          Role     @default(USER)
+  password      String?
   accounts      Account[]
   sessions      Session[]
 }
@@ -61,4 +63,10 @@ model TestSchemaMigration {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+
+enum Role {
+  USER
+  ADMIN
 }

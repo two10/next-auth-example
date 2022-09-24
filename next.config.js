@@ -1,7 +1,20 @@
 const path = require('path')
 
 module.exports = {
-  trailingSlash: true,
+
+  async rewrites() {
+    return [
+      {
+        source: '/server/:slug',
+        destination: process.env.NEXT_PUBLIC_SERVER_URL+'/api/:slug',
+      },
+    ]
+  } ,
+
+
+
+
+
   reactStrictMode: false,
   experimental: {
     esmExternals: true,
@@ -16,3 +29,4 @@ module.exports = {
     return config
   }
 }
+
