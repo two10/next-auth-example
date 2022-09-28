@@ -24,15 +24,16 @@ import DepositWithdraw from 'src/views/dashboard/DepositWithdraw'
 import SalesByCountries from 'src/views/dashboard/SalesByCountries'
 import ProtectedComponent from 'src/components/protected-component'
 
-import { axiosserver } from 'src/apiutil/axiosserver'
+
 import useSWR from 'swr'
 import { Card } from '@mui/material'
 
-const fetcher = (...args) => fetch(...args).then((res) => res.json())
+const fetcher = (args : string) =>  fetch(args).then((res) => res.json())
 
 const Dashboard = () => {
 
-  const { data, error } = useSWR('/server/advisor', fetcher)
+  const {  error } = useSWR('/server/advisor', fetcher)
+
 
   return (
     <ProtectedComponent>
