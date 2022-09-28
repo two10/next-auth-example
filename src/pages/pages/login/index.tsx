@@ -109,12 +109,17 @@ const LoginPage = () => {
     };
 
     const formBody : string[] = [];
+    const test = "";
+    console.log(test);
     for (const property in details) {
       const encodedKey = encodeURIComponent(property);
       const encodedValue = encodeURIComponent(details[property]);
       formBody.push(encodedKey + "=" + encodedValue);
     }
     const formData = formBody.join("&");
+
+
+
 
 
 
